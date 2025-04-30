@@ -28,3 +28,18 @@ export async function handleLogin({ email, password }: LoginArguments) {
 
   return data;
 }
+
+type RegisterUser = {
+  name: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
+  address: string;
+  postCode: string;
+};
+
+export async function handleRegister(user: RegisterUser) {
+  const { data } = await axios.post(`${API_HOST}/register`, user);
+  return data;
+}

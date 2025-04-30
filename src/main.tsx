@@ -4,13 +4,16 @@ import "./index.css";
 import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
+import AuthProvider from "./providers/AuthProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <CookiesProvider defaultSetOptions={{ path: "/" }}>
-        <App />
-      </CookiesProvider>
+      <AuthProvider>
+        <CookiesProvider defaultSetOptions={{ path: "/" }}>
+          <App />
+        </CookiesProvider>
+      </AuthProvider>
     </BrowserRouter>
   </StrictMode>,
 );

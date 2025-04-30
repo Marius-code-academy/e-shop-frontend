@@ -3,6 +3,7 @@ import { Button, Input, InputLabel, Typography } from "@mui/material";
 import { useCookies } from "react-cookie";
 import { handleLogin } from "../../api/auth";
 import { AxiosError } from "axios";
+import { useAuth } from "../../providers/AuthProvider";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -10,12 +11,15 @@ export default function LoginPage() {
   const [cookies, setCookie] = useCookies(["token"]);
   const [error, setError] = useState("");
 
+  const { setIsAuthenticated } = useAuth();
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       const { token } = await handleLogin({ email, password });
       setCookie("token", token);
+      setIsAuthenticated(true);
     } catch (error) {
       if (error instanceof AxiosError) {
         setError(error.response?.data.error);
